@@ -7,6 +7,7 @@ import {
 } from 'features/following/following.slices';
 import { FollowingButtonComponent } from 'features/following/button';
 import Character from 'features/characters/characters.types';
+import {CharacterCard} from './CharacterCard';
 
 export type CharactersComponentProps = {
   rickIDDS: number[];
@@ -31,19 +32,14 @@ const CharactersComponent: FC<CharactersComponentProps> = ({ rickIDDS }: Charact
 
   return (
     <div className={'characters'}>
-      {charactersArray.map((iHateThisChars) => (
-        <div className={"card"} key={iHateThisChars.id}>
-          <div className={"card-image"}>
-            <img src={iHateThisChars.image} />
-          </div>
+      {charactersArray.map((character) => (
+        <CharacterCard>
+          <CharacterCard.Picture img={character.image} />
           <div className={"card-body"}>
-            <span>{iHateThisChars.name}</span>
-            <FollowingButtonComponent
-              isFav={followingIds.indexOf(iHateThisChars.id) >= 0}
-              onToggleFavorite={(setFav) => onToggleFavorite(iHateThisChars, setFav)}
-            />
+            <CharacterCard.Content name={character.name} />
+            <CharacterCard.Actions id={character.id} />
           </div>
-        </div>
+        </CharacterCard>
       ))}
     </div>
   );
